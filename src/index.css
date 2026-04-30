@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sereno Design System — calming healthcare companion
+   All colors HSL. Semantic tokens only. */
+
+@layer base {
+  :root {
+    /* Surfaces — warm cream, not clinical white */
+    --background: 38 32% 94%;
+    --foreground: 170 25% 12%;
+
+    --card: 40 40% 97%;
+    --card-foreground: 170 25% 12%;
+
+    --popover: 40 40% 97%;
+    --popover-foreground: 170 25% 12%;
+
+    /* Primary — healing sage green */
+    --primary: 165 32% 32%;
+    --primary-foreground: 40 40% 97%;
+    --primary-glow: 158 38% 52%;
+
+    /* Secondary — soft sand */
+    --secondary: 36 28% 88%;
+    --secondary-foreground: 170 25% 18%;
+
+    --muted: 38 22% 90%;
+    --muted-foreground: 170 12% 38%;
+
+    /* Accent — warm coral for human moments */
+    --accent: 14 72% 68%;
+    --accent-foreground: 40 40% 97%;
+
+    /* Calm signals */
+    --success: 152 42% 42%;
+    --success-foreground: 40 40% 97%;
+    --warning: 32 84% 56%;
+    --warning-foreground: 170 25% 12%;
+    --destructive: 8 62% 52%;
+    --destructive-foreground: 40 40% 97%;
+
+    --border: 38 18% 84%;
+    --input: 38 18% 84%;
+    --ring: 165 32% 32%;
+
+    --radius: 1.25rem;
+
+    /* Living gradients */
+    --gradient-calm: linear-gradient(160deg, hsl(165 32% 32%) 0%, hsl(158 38% 52%) 100%);
+    --gradient-warm: linear-gradient(160deg, hsl(40 50% 96%) 0%, hsl(36 38% 88%) 100%);
+    --gradient-glow: radial-gradient(circle at 30% 20%, hsl(158 38% 52% / 0.18), transparent 60%);
+    --gradient-hero: linear-gradient(180deg, hsl(38 40% 96%) 0%, hsl(38 32% 94%) 100%);
+
+    /* Soft elevation — never harsh */
+    --shadow-soft: 0 2px 12px -4px hsl(165 30% 20% / 0.08);
+    --shadow-card: 0 8px 32px -12px hsl(165 30% 20% / 0.14);
+    --shadow-float: 0 20px 48px -16px hsl(165 30% 20% / 0.22);
+    --shadow-glow: 0 0 0 4px hsl(158 38% 52% / 0.15);
+
+    --transition-gentle: 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-breath: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 38 32% 94%;
+    --sidebar-foreground: 170 25% 12%;
+    --sidebar-primary: 165 32% 32%;
+    --sidebar-primary-foreground: 40 40% 97%;
+    --sidebar-accent: 36 28% 88%;
+    --sidebar-accent-foreground: 170 25% 18%;
+    --sidebar-border: 38 18% 84%;
+    --sidebar-ring: 165 32% 32%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  html { -webkit-tap-highlight-color: transparent; }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    background-image: var(--gradient-glow);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Fraunces', Georgia, serif;
+    font-feature-settings: "ss01";
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  /* Living breath — gentle pulse for hero elements */
+  .breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  /* Soft halo behind primary actions */
+  .halo {
+    position: relative;
+  }
+  .halo::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    background: var(--gradient-calm);
+    opacity: 0.25;
+    filter: blur(16px);
+    z-index: -1;
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  /* Stage card — the foundational container */
+  .stage-card {
+    @apply rounded-[var(--radius)] bg-card p-6;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Touch-friendly chip */
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium
+           bg-secondary text-secondary-foreground border border-transparent
+           transition-all duration-300 active:scale-95;
+  }
+  .chip[data-active="true"] {
+    @apply bg-primary text-primary-foreground border-primary;
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Progress dots — journey rhythm */
+  .step-dot {
+    @apply h-1.5 rounded-full bg-muted transition-all duration-500;
+  }
+  .step-dot[data-state="done"] { @apply bg-primary; }
+  .step-dot[data-state="active"] { @apply bg-primary w-8; }
+  .step-dot[data-state="todo"] { @apply w-1.5; }
+}
+
+@layer utilities {
+  .glass {
+    background: hsl(40 40% 97% / 0.78);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+  }
+  .text-balance { text-wrap: balance; }
+  .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes draw-check {
+  to { stroke-dashoffset: 0; }
+}
